@@ -6,6 +6,7 @@ defmodule MessageBuilderTest do
 
     message = MessageBuilder.build(given_hostname)
 
+    assert << header::binary-size(12), _rest::binary >> = message
     assert <<
              _id::16,
              qr::1,
@@ -20,7 +21,7 @@ defmodule MessageBuilderTest do
              ancount::16,
             nscount::16,
             arcount::16
-           >> = message
+           >> = header
 
     assert qr == 1
     assert opcode == 0
